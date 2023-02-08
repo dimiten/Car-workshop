@@ -26,6 +26,6 @@ def update_customer_is_regular(customer_id: str, customer_is_regular: bool):
     return CustomerController.update_customer_is_regular(customer_id, customer_is_regular)
 
 
-@customer_router.delete("/{customer_id}")
+@customer_router.delete("/")
 def delete_customer_by_id(customer_id: str):
     return CustomerController.delete_customer_by_id(customer_id)
