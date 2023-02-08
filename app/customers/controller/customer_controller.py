@@ -1,6 +1,7 @@
 from sqlalchemy.exc import IntegrityError
 from app.customers.services import CustomerServices
 from fastapi import HTTPException, Response
+from app.customers.exceptions import *
 
 
 class CustomerController:
@@ -10,8 +11,10 @@ class CustomerController:
         try:
             customer = CustomerServices.create_customer(name, surname, email, phone_number)
             return customer
-        except IntegrityError as e:
-            raise HTTPException(status_code=400, detail=f"Customer with provided email - {email} already exists.")
+        except CustomerEmailException as e:
+            raise HTTPException(status_code=e.status_code, detail=e.detail)
+        except CustomerPhoneNumberException as e:
+            raise HTTPException(status_code=e.status_code, detail=e.detail)
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
@@ -30,11 +33,12 @@ class CustomerController:
 
     @staticmethod
     def delete_customer_by_id(customer_id: str):
-        try:
+        customer = CustomerServices.get_customer_by_id(customer_id)
+        if customer:
             CustomerServices.delete_customer_by_id(customer_id)
             return Response(content=f"Customer with id - {customer_id} is deleted")
-        except Exception as e:
-            raise HTTPException(status_code=400, detail=str(e))
+        else:
+            raise HTTPException(status_code=400, detail=f"Customer with provided id: {customer_id} does not exist")
 
     @staticmethod
     def update_customer_is_regular(customer_id: str, is_regular: bool):

@@ -1,5 +1,6 @@
 from app.customers.repositories import CustomerRepository
 from app.db.database import SessionLocal
+from app.customers.exceptions import *
 
 
 class CustomerServices:
@@ -9,6 +10,12 @@ class CustomerServices:
         try:
             with SessionLocal() as db:
                 customer_repository = CustomerRepository(db)
+                if email in customer_repository.get_customers_emails():
+                    raise CustomerEmailException(status_code=400,
+                                                 detail=f"Customer with provided email - {email} already exists.")
+                if phone_number in customer_repository.get_customers_phone_numbers():
+                    raise CustomerPhoneNumberException(status_code=400,
+                                                       detail=f"Customer with provided phone number - {phone_number} already exists.")
                 return customer_repository.create_customer(name, surname, email, phone_number)
         except Exception as e:
             raise e

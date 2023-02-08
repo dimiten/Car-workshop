@@ -51,3 +51,17 @@ class CustomerRepository:
             return customer
         except Exception as e:
             raise e
+
+    def get_customers_emails(self):
+        try:
+            customers_emails = self.db.query(Customer.email).all()
+            return [item for t in customers_emails for item in t]
+        except Exception as e:
+            raise e
+
+    def get_customers_phone_numbers(self):
+        try:
+            customers_phone_numbers = self.db.query(Customer.phone_number).all()
+            return [item for t in customers_phone_numbers for item in t]
+        except Exception as e:
+            raise e
