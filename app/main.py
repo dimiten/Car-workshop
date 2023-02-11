@@ -7,6 +7,7 @@ from app.db.database import engine, Base
 from app.customers.routes import customer_router
 from app.employees.routes import employee_router
 from app.service_types.routes import service_type_router
+from app.vehicles.routes import vehicle_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -16,6 +17,7 @@ def init_app():
     app.include_router(customer_router)
     app.include_router(employee_router)
     app.include_router(service_type_router)
+    app.include_router(vehicle_router)
     return app
 
 

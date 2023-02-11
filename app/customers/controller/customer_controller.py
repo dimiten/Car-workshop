@@ -1,4 +1,3 @@
-from sqlalchemy.exc import IntegrityError
 from app.customers.services import CustomerServices
 from fastapi import HTTPException, Response
 from app.customers.exceptions import *
