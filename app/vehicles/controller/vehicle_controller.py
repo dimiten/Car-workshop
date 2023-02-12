@@ -27,8 +27,8 @@ class VehicleController:
 
     @staticmethod
     def get_all_vehicles():
-        customers = VehicleServices.get_all_vehicles()
-        return customers
+        vehicles = VehicleServices.get_all_vehicles()
+        return vehicles
 
     @staticmethod
     def delete_vehicle_by_id(vehicle_id: str):

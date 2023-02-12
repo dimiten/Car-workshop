@@ -8,6 +8,7 @@ from app.customers.routes import customer_router
 from app.employees.routes import employee_router
 from app.service_types.routes import service_type_router
 from app.vehicles.routes import vehicle_router
+from app.vehicle_services.routes import vehicle_service_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,6 +19,7 @@ def init_app():
     app.include_router(employee_router)
     app.include_router(service_type_router)
     app.include_router(vehicle_router)
+    app.include_router(vehicle_service_router)
     return app
 
 
