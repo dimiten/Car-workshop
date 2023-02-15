@@ -72,3 +72,12 @@ class VehicleServicesServices:
                                                                          vehicle_id, employee_id, service_type_name)
         except Exception as e:
             raise e
+
+    @staticmethod
+    def get_number_of_services_for_month(number_of_month: str):
+        try:
+            with SessionLocal() as db:
+                vehicle_service_repository = VehicleServiceRepository(db)
+                return vehicle_service_repository.get_number_of_services_for_month(number_of_month)
+        except Exception as e:
+            raise e

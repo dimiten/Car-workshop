@@ -61,3 +61,11 @@ class VehicleServiceRepository:
             return vehicle_service
         except Exception as e:
             raise e
+
+    def get_number_of_services_for_month(self, number_of_month: str):
+        try:
+            number_of_services = self.db.query(VehicleService).filter(
+                VehicleService.date_of_service.like(f"%-{number_of_month}-%")).count()
+            return number_of_services
+        except Exception as e:
+            raise e

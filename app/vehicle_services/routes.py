@@ -32,3 +32,8 @@ def update_vehicle_service(vehicle_service_id: str, date_of_service: str = None,
 @vehicle_service_router.delete("/")
 def delete_vehicle_service_by_id(vehicle_service_id: str):
     return VehicleServiceController.delete_vehicle_service_by_id(vehicle_service_id)
+
+
+@vehicle_service_router.get("/get-number-of-services-for-month", response_model=int)
+def get_number_of_services_for_month(number_of_month: str):
+    return VehicleServiceController.get_number_of_services_for_month(number_of_month)
