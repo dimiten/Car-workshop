@@ -46,3 +46,16 @@ class CustomerController:
             return CustomerServices.update_customer_is_regular(customer_id, is_regular)
         else:
             raise HTTPException(status_code=400, detail=f"Customer with provided id: {customer_id} does not exist")
+
+    @staticmethod
+    def get_all_vehicles_from_customer(customer_id: str):
+        customer = CustomerServices.get_customer_by_id(customer_id)
+        if not customer:
+            raise HTTPException(status_code=400, detail=f"Customer with provided id: {customer_id} does not exist")
+
+        vehicles = CustomerServices.get_all_vehicles_from_customer(customer_id)
+        if vehicles:
+            return CustomerServices.get_all_vehicles_from_customer(customer_id)
+        else:
+            raise HTTPException(status_code=400,
+                                detail=f"Customer with provided id: {customer_id} doesn't have any vehicles")

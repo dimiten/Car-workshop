@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from app.customers.controller import CustomerController
 from app.customers.schemas import *
+from app.vehicles.schemas import VehicleSchema
 
 
 customer_router = APIRouter(tags=["Customers"], prefix="/api/customers")
@@ -29,3 +30,8 @@ def update_customer_is_regular(customer_id: str, customer_is_regular: bool):
 @customer_router.delete("/")
 def delete_customer_by_id(customer_id: str):
     return CustomerController.delete_customer_by_id(customer_id)
+
+
+@customer_router.get("get-all-vehicles-from-customer", response_model=list[VehicleSchema])
+def get_all_vehicles_from_customer(customer_id: str):
+    return CustomerController.get_all_vehicles_from_customer(customer_id)

@@ -1,6 +1,7 @@
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from app.customers.models import Customer
+from app.vehicles.models import Vehicle
 
 
 class CustomerRepository:
@@ -63,5 +64,12 @@ class CustomerRepository:
         try:
             customers_phone_numbers = self.db.query(Customer.phone_number).all()
             return [item for t in customers_phone_numbers for item in t]
+        except Exception as e:
+            raise e
+
+    def get_all_vehicles_from_customer(self, customer_id: str):
+        try:
+            vehicles = self.db.query(Vehicle).filter(Vehicle.customer_id == customer_id).all()
+            return vehicles
         except Exception as e:
             raise e

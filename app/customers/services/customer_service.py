@@ -55,3 +55,12 @@ class CustomerServices:
                 return customer_repository.update_customer_is_regular(customer_id, is_regular)
         except Exception as e:
             raise e
+
+    @staticmethod
+    def get_all_vehicles_from_customer(customer_id: str):
+        try:
+            with SessionLocal() as db:
+                customer_repository = CustomerRepository(db)
+                return customer_repository.get_all_vehicles_from_customer(customer_id)
+        except Exception as e:
+            raise e
