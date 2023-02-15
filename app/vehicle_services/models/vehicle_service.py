@@ -1,6 +1,7 @@
 from app.db.database import Base
 from sqlalchemy import Column, String, ForeignKey, Date
 from uuid import uuid4
+from datetime import date, datetime
 
 
 class VehicleService(Base):
@@ -12,7 +13,7 @@ class VehicleService(Base):
     employee_id = Column(String(50), ForeignKey("employees.id"))
     service_type_name = Column(String(50), ForeignKey("service_types.name"))
 
-    def __init__(self, date_of_service, vehicle_id, employee_id, service_type_name):
+    def __init__(self, date_of_service: date, vehicle_id: str, employee_id: str, service_type_name: str):
         self.date_of_service = date_of_service
         self.vehicle_id = vehicle_id
         self.employee_id = employee_id

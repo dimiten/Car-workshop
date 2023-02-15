@@ -1,11 +1,11 @@
-import datetime
+from datetime import date
 
 from pydantic import BaseModel, UUID4
 
 
 class VehicleServiceSchema(BaseModel):
     id: UUID4
-    date_of_service: datetime.date
+    date_of_service: date
     vehicle_id: str
     employee_id: str
     service_type_name: str
@@ -15,7 +15,7 @@ class VehicleServiceSchema(BaseModel):
 
 
 class VehicleServiceSchemaIn(BaseModel):
-    date_of_service: datetime.date
+    date_of_service: date
     vehicle_id: str
     employee_id: str
     service_type_name: str

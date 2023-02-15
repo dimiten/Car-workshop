@@ -1,3 +1,5 @@
+from datetime import date
+
 from app.vehicle_services.services import VehicleServicesServices
 from fastapi import HTTPException, Response
 from app.vehicle_services.exceptions import *
@@ -6,11 +8,13 @@ from app.vehicle_services.exceptions import *
 class VehicleServiceController:
 
     @staticmethod
-    def create_vehicle_service(date_of_service: str, vehicle_id: str, employee_id: str, service_type_name: str):
+    def create_vehicle_service(date_of_service: date, vehicle_id: str, employee_id: str, service_type_name: str):
         try:
             vehicle_service = VehicleServicesServices.create_vehicle_service(date_of_service, vehicle_id, employee_id,
                                                                              service_type_name)
             return vehicle_service
+        except ValueError:
+            raise HTTPException(status_code=422, detail="Invalid date format. Must be in YYYY-MM-DD format.")
         except InvalidVehicleException as e:
             raise HTTPException(status_code=e.status_code, detail=e.detail)
         except InvalidEmployeeException as e:
@@ -31,8 +35,11 @@ class VehicleServiceController:
 
     @staticmethod
     def get_all_vehicle_services():
-        vehicle_services = VehicleServicesServices.get_all_vehicle_services()
-        return vehicle_services
+        try:
+            vehicle_services = VehicleServicesServices.get_all_vehicle_services()
+            return vehicle_services
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
 
     @staticmethod
     def delete_vehicle_service_by_id(vehicle_service_id: str):

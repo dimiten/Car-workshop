@@ -1,3 +1,5 @@
+from datetime import date
+
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from app.vehicle_services.models import VehicleService
@@ -8,7 +10,7 @@ class VehicleServiceRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def create_vehicle_service(self, date_of_service, vehicle_id, employee_id, service_type_name):
+    def create_vehicle_service(self, date_of_service: date, vehicle_id: str, employee_id: str, service_type_name: str):
         try:
             vehicle_service = VehicleService(date_of_service, vehicle_id, employee_id, service_type_name)
             self.db.add(vehicle_service)
