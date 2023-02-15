@@ -68,3 +68,10 @@ class VehicleRepository:
             return [item for t in license_plates for item in t]
         except Exception as e:
             raise e
+
+    def get_all_vehicles_by_manufacture_year(self, manufacture_year: str):
+        try:
+            vehicles = self.db.query(Vehicle).filter(Vehicle.manufacture_year == manufacture_year).all()
+            return vehicles
+        except Exception as e:
+            raise e

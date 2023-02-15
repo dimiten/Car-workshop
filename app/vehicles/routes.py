@@ -31,3 +31,8 @@ def update_vehicle(vehicle_id: str, license_plate: str = None, manufacturer: str
 @vehicle_router.delete("/")
 def delete_vehicle_by_id(vehicle_id: str):
     return VehicleController.delete_vehicle_by_id(vehicle_id)
+
+
+@vehicle_router.get("/get-vehicles-by-manufacture-year", response_model=list[VehicleSchema])
+def get_all_vehicles_by_manufacture_year(manufacture_year: str):
+    return VehicleController.get_vehicles_by_manufacture_year(manufacture_year)

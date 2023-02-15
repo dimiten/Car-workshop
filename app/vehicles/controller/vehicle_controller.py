@@ -48,3 +48,11 @@ class VehicleController:
                                                   manufacture_year, customer_id)
         else:
             raise HTTPException(status_code=400, detail=f"Vehicle with provided id: {vehicle_id} does not exist")
+
+    @staticmethod
+    def get_vehicles_by_manufacture_year(manufacture_year: str):
+        vehicles = VehicleServices.get_all_vehicles_by_manufacture_year(manufacture_year)
+        if vehicles:
+            return vehicles
+        else:
+            raise HTTPException(status_code=400, detail=f"There are no vehicles with provided year: {manufacture_year}")
