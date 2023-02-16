@@ -72,3 +72,13 @@ class VehicleServiceRepository:
             return number_of_services
         except Exception as e:
             raise e
+
+    def get_number_of_services_for_year(self, year: str):
+        try:
+            number_of_services = self.db.query(VehicleService.service_type_name,
+                                               func.count(VehicleService.service_type_name).label("number_of_services")).filter(
+                VehicleService.date_of_service.like(f"{year}-%-%")).group_by(
+                VehicleService.service_type_name).all()
+            return number_of_services
+        except Exception as e:
+            raise e

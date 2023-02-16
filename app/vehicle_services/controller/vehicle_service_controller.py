@@ -70,3 +70,12 @@ class VehicleServiceController:
         else:
             raise HTTPException(status_code=400,
                                 detail=f"There are no services for provided number of month: {number_of_month}")
+
+    @staticmethod
+    def get_number_of_services_for_year(year: str):
+        number_of_services = VehicleServicesServices.get_number_of_services_for_year(year)
+        if number_of_services:
+            return VehicleServicesServices.get_number_of_services_for_year(year)
+        else:
+            raise HTTPException(status_code=400,
+                                detail=f"There are no services for provided year: {year}")

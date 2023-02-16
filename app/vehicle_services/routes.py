@@ -37,3 +37,8 @@ def delete_vehicle_service_by_id(vehicle_service_id: str):
 @vehicle_service_router.get("/get-number-of-services-for-month", response_model=list[VehicleServiceCountSchema])
 def get_number_of_services_for_month(number_of_month: str):
     return VehicleServiceController.get_number_of_services_for_month(number_of_month)
+
+
+@vehicle_service_router.get("/get-number-of-services-for-year", response_model=list[VehicleServiceCountSchema])
+def get_number_of_services_for_year(year: str):
+    return VehicleServiceController.get_number_of_services_for_year(year)
