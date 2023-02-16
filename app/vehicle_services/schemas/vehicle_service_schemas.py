@@ -22,3 +22,11 @@ class VehicleServiceSchemaIn(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class VehicleServiceCountSchema(BaseModel):
+    service_type_name: str
+    number_of_services: int
+
+    class Config:
+        orm_mode = True

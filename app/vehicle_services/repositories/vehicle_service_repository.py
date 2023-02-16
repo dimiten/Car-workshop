@@ -2,6 +2,7 @@ from datetime import date
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from app.vehicle_services.models import VehicleService
 
 
@@ -64,8 +65,10 @@ class VehicleServiceRepository:
 
     def get_number_of_services_for_month(self, number_of_month: str):
         try:
-            number_of_services = self.db.query(VehicleService).filter(
-                VehicleService.date_of_service.like(f"%-{number_of_month}-%")).count()
+            number_of_services = self.db.query(VehicleService.service_type_name,
+                                               func.count(VehicleService.service_type_name).label("number_of_services")).filter(
+                VehicleService.date_of_service.like(f"%-{number_of_month}-%")).group_by(
+                VehicleService.service_type_name).all()
             return number_of_services
         except Exception as e:
             raise e
