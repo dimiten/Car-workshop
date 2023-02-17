@@ -74,11 +74,11 @@ class VehicleServicesServices:
             raise e
 
     @staticmethod
-    def get_number_of_services_for_month(number_of_month: str):
+    def get_number_of_services_for_month(number_of_month: str, year: str):
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
-                return vehicle_service_repository.get_number_of_services_for_month(number_of_month)
+                return vehicle_service_repository.get_number_of_services_for_month(number_of_month, year)
         except Exception as e:
             raise e
 

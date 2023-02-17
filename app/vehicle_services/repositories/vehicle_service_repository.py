@@ -63,11 +63,11 @@ class VehicleServiceRepository:
         except Exception as e:
             raise e
 
-    def get_number_of_services_for_month(self, number_of_month: str):
+    def get_number_of_services_for_month(self, number_of_month: str, year: str):
         try:
             number_of_services = self.db.query(VehicleService.service_type_name,
                                                func.count(VehicleService.service_type_name).label("number_of_services")).filter(
-                VehicleService.date_of_service.like(f"%-{number_of_month}-%")).group_by(
+                VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).group_by(
                 VehicleService.service_type_name).all()
             return number_of_services
         except Exception as e:

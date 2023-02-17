@@ -63,10 +63,10 @@ class VehicleServiceController:
                                 detail=f"Vehicle service with provided id: {vehicle_service_id} does not exist")
 
     @staticmethod
-    def get_number_of_services_for_month(number_of_month: str):
-        number_of_services = VehicleServicesServices.get_number_of_services_for_month(number_of_month)
+    def get_number_of_services_for_month(number_of_month: str, year: str):
+        number_of_services = VehicleServicesServices.get_number_of_services_for_month(number_of_month, year)
         if number_of_services:
-            return VehicleServicesServices.get_number_of_services_for_month(number_of_month)
+            return VehicleServicesServices.get_number_of_services_for_month(number_of_month, year)
         else:
             raise HTTPException(status_code=400,
                                 detail=f"There are no services for provided number of month: {number_of_month}")
