@@ -75,3 +75,17 @@ class VehicleRepository:
             return vehicles
         except Exception as e:
             raise e
+
+    def get_all_vehicles_by_manufacturer(self, manufacturer: str):
+        try:
+            vehicles = self.db.query(Vehicle).filter(Vehicle.manufacturer == manufacturer).all()
+            return vehicles
+        except Exception as e:
+            raise e
+
+    def get_all_vehicles_by_model(self, manufacturer: str, model: str):
+        try:
+            vehicles = self.db.query(Vehicle).filter(Vehicle.manufacturer == manufacturer, Vehicle.model == model).all()
+            return vehicles
+        except Exception as e:
+            raise e

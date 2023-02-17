@@ -56,3 +56,22 @@ class VehicleController:
             return vehicles
         else:
             raise HTTPException(status_code=400, detail=f"There are no vehicles with provided year: {manufacture_year}")
+
+    @staticmethod
+    def get_vehicles_by_manufacturer(manufacturer: str):
+        vehicles = VehicleServices.get_all_vehicles_by_manufacturer(manufacturer)
+        if vehicles:
+            return vehicles
+        else:
+            raise HTTPException(status_code=400,
+                                detail=f"There are no vehicles with provided manufacturer: {manufacturer}")
+
+    @staticmethod
+    def get_vehicles_by_model(manufacturer: str, model: str):
+        vehicles = VehicleServices.get_all_vehicles_by_model(manufacturer, model)
+        if vehicles:
+            return vehicles
+        else:
+            raise HTTPException(status_code=400,
+                                detail=f"There are no vehicles with provided manufacturer: {manufacturer}"
+                                       f" and model: {model}")

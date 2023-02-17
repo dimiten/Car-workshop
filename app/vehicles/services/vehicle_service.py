@@ -70,3 +70,21 @@ class VehicleServices:
                 return vehicle_repository.get_all_vehicles_by_manufacture_year(manufacture_year)
         except Exception as e:
             raise e
+
+    @staticmethod
+    def get_all_vehicles_by_manufacturer(manufacturer: str):
+        try:
+            with SessionLocal() as db:
+                vehicle_repository = VehicleRepository(db)
+                return vehicle_repository.get_all_vehicles_by_manufacturer(manufacturer)
+        except Exception as e:
+            raise e
+
+    @staticmethod
+    def get_all_vehicles_by_model(manufacturer: str, model: str):
+        try:
+            with SessionLocal() as db:
+                vehicle_repository = VehicleRepository(db)
+                return vehicle_repository.get_all_vehicles_by_model(manufacturer, model)
+        except Exception as e:
+            raise e

@@ -36,3 +36,13 @@ def delete_vehicle_by_id(vehicle_id: str):
 @vehicle_router.get("/get-vehicles-by-manufacture-year", response_model=list[VehicleSchema])
 def get_all_vehicles_by_manufacture_year(manufacture_year: str):
     return VehicleController.get_vehicles_by_manufacture_year(manufacture_year)
+
+
+@vehicle_router.get("/get-vehicles-by-manufacturer", response_model=list[VehicleSchema])
+def get_all_vehicles_by_manufacturer(manufacturer: str):
+    return VehicleController.get_vehicles_by_manufacturer(manufacturer)
+
+
+@vehicle_router.get("/get-vehicles-by-model", response_model=list[VehicleSchema])
+def get_all_vehicles_by_model(manufacturer: str, model: str):
+    return VehicleController.get_vehicles_by_model(manufacturer, model)
