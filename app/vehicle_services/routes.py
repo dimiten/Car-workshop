@@ -1,8 +1,25 @@
 from fastapi import APIRouter
 from app.vehicle_services.controller import VehicleServiceController
 from app.vehicle_services.schemas import *
+from enum import Enum
+from datetime import date
 
 vehicle_service_router = APIRouter(tags=["Vehicle services"], prefix="/api/vehicle-services")
+
+
+class Month(str, Enum):
+    January = "01"
+    February = "02"
+    March = "03"
+    April = "04"
+    May = "05"
+    June = "06"
+    July = "07"
+    August = "08"
+    September = "09"
+    October = "10"
+    November = "11"
+    December = "12"
 
 
 @vehicle_service_router.post("/add-new-vehicle-service", response_model=VehicleServiceSchema)
@@ -35,7 +52,7 @@ def delete_vehicle_service_by_id(vehicle_service_id: str):
 
 
 @vehicle_service_router.get("/get-number-of-services-for-month", response_model=list[VehicleServiceCountSchema])
-def get_number_of_services_for_month(number_of_month: str):
+def get_number_of_services_for_month(number_of_month: Month):
     return VehicleServiceController.get_number_of_services_for_month(number_of_month)
 
 
