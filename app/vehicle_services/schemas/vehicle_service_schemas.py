@@ -44,3 +44,11 @@ class VehicleServiceYearIncomeSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class VehicleServiceMostPopularSchema(BaseModel):
+    service_type_name: str
+    number_of_services: int
+
+    class Config:
+        orm_mode = True

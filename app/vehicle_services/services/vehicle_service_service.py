@@ -108,3 +108,21 @@ class VehicleServicesServices:
                 return vehicle_service_repository.get_income_for_year(year)
         except Exception as e:
             raise e
+
+    @staticmethod
+    def get_most_popular_service_for_month(number_of_month: str, year: str):
+        try:
+            with SessionLocal() as db:
+                vehicle_service_repository = VehicleServiceRepository(db)
+                return vehicle_service_repository.get_most_popular_service_for_month(number_of_month, year)
+        except Exception as e:
+            raise e
+
+    @staticmethod
+    def get_most_popular_service_for_year(year: str):
+        try:
+            with SessionLocal() as db:
+                vehicle_service_repository = VehicleServiceRepository(db)
+                return vehicle_service_repository.get_most_popular_service_for_year(year)
+        except Exception as e:
+            raise e

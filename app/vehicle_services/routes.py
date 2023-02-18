@@ -69,3 +69,13 @@ def get_income_for_month(number_of_month: Month, year: str):
 @vehicle_service_router.get("/get-income-for-year", response_model=VehicleServiceYearIncomeSchema)
 def get_income_for_year(year: str):
     return VehicleServiceController.get_income_for_year(year)
+
+
+@vehicle_service_router.get("/get-most-popular-service-for-month", response_model=VehicleServiceMostPopularSchema)
+def get_most_popular_service_for_month(number_of_month: Month, year: str):
+    return VehicleServiceController.get_most_popular_service_for_month(number_of_month, year)
+
+
+@vehicle_service_router.get("/get-most-popular-service-for-year", response_model=VehicleServiceMostPopularSchema)
+def get_most_popular_service_for_year(year: str):
+    return VehicleServiceController.get_most_popular_service_for_year(year)

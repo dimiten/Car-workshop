@@ -2,7 +2,7 @@ from datetime import date
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from app.vehicle_services.models import VehicleService
 from app.service_types.models import ServiceType
 
@@ -98,10 +98,30 @@ class VehicleServiceRepository:
 
     def get_income_for_year(self, year: str):
         try:
-            # income_for_month = self.db.query(func.sum(ServiceType.cost).label("income"))
-            # .filter(VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).first()[0]
             income_for_year = self.db.query(func.sum(ServiceType.cost).label("income_for_year")).join(
                 VehicleService).filter(VehicleService.date_of_service.like(f"{year}-%-%")).first()
             return income_for_year
+        except Exception as e:
+            raise e
+
+    def get_most_popular_service_for_month(self, number_of_month: str, year: str):
+        try:
+            most_popular_service = self.db.query(VehicleService.service_type_name,
+                                                 func.count(VehicleService.service_type_name).label(
+                                                     "number_of_services")).filter(
+                VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).group_by(
+                VehicleService.service_type_name).order_by(desc("number_of_services")).first()
+            return most_popular_service
+        except Exception as e:
+            raise e
+
+    def get_most_popular_service_for_year(self, year: str):
+        try:
+            most_popular_service = self.db.query(VehicleService.service_type_name,
+                                                 func.count(VehicleService.service_type_name).label(
+                                                     "number_of_services")).filter(
+                VehicleService.date_of_service.like(f"{year}-%-%")).group_by(
+                VehicleService.service_type_name).order_by(desc("number_of_services")).first()
+            return most_popular_service
         except Exception as e:
             raise e

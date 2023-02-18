@@ -89,7 +89,7 @@ class VehicleServiceController:
         if income_for_month[0] is None:
             raise HTTPException(status_code=400,
                                 detail=f"There is no income for provided number of month: {number_of_month}"
-                                f", and year: {year}")
+                                       f", and year: {year}")
         else:
             return VehicleServicesServices.get_income_for_month(number_of_month, year)
 
@@ -101,3 +101,22 @@ class VehicleServiceController:
                                 detail=f"There is no income for provided year: {year}")
         else:
             return VehicleServicesServices.get_income_for_year(year)
+
+    @staticmethod
+    def get_most_popular_service_for_month(number_of_month: str, year: str):
+        most_popular_service = VehicleServicesServices.get_most_popular_service_for_month(number_of_month, year)
+        if most_popular_service:
+            return most_popular_service
+        else:
+            raise HTTPException(status_code=400,
+                                detail=f"There are no services for provided number of month: {number_of_month}"
+                                       f", and year: {year}")
+
+    @staticmethod
+    def get_most_popular_service_for_year(year: str):
+        most_popular_service = VehicleServicesServices.get_most_popular_service_for_year(year)
+        if most_popular_service:
+            return most_popular_service
+        else:
+            raise HTTPException(status_code=400,
+                                detail=f"There are no services for provided year: {year}")
