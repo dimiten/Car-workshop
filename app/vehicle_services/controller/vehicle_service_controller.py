@@ -1,5 +1,7 @@
 from datetime import date
 
+from pydantic import ValidationError
+
 from app.vehicle_services.services import VehicleServicesServices
 from fastapi import HTTPException, Response
 from app.vehicle_services.exceptions import *
@@ -69,7 +71,8 @@ class VehicleServiceController:
             return VehicleServicesServices.get_number_of_services_for_month(number_of_month, year)
         else:
             raise HTTPException(status_code=400,
-                                detail=f"There are no services for provided number of month: {number_of_month}")
+                                detail=f"There are no services for provided number of month: {number_of_month}"
+                                       f", and year: {year}")
 
     @staticmethod
     def get_number_of_services_for_year(year: str):
@@ -79,3 +82,22 @@ class VehicleServiceController:
         else:
             raise HTTPException(status_code=400,
                                 detail=f"There are no services for provided year: {year}")
+
+    @staticmethod
+    def get_income_for_month(number_of_month: str, year: str):
+        income_for_month = VehicleServicesServices.get_income_for_month(number_of_month, year)
+        if income_for_month[0] is None:
+            raise HTTPException(status_code=400,
+                                detail=f"There is no income for provided number of month: {number_of_month}"
+                                f", and year: {year}")
+        else:
+            return VehicleServicesServices.get_income_for_month(number_of_month, year)
+
+    @staticmethod
+    def get_income_for_year(year: str):
+        income_for_year = VehicleServicesServices.get_income_for_year(year)
+        if income_for_year[0] is None:
+            raise HTTPException(status_code=400,
+                                detail=f"There is no income for provided year: {year}")
+        else:
+            return VehicleServicesServices.get_income_for_year(year)

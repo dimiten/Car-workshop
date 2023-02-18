@@ -59,3 +59,13 @@ def get_number_of_services_for_month(number_of_month: Month, year: str):
 @vehicle_service_router.get("/get-number-of-services-for-year", response_model=list[VehicleServiceCountSchema])
 def get_number_of_services_for_year(year: str):
     return VehicleServiceController.get_number_of_services_for_year(year)
+
+
+@vehicle_service_router.get("/get-income-for-month", response_model=VehicleServiceMonthIncomeSchema)
+def get_income_for_month(number_of_month: Month, year: str):
+    return VehicleServiceController.get_income_for_month(number_of_month, year)
+
+
+@vehicle_service_router.get("/get-income-for-year", response_model=VehicleServiceYearIncomeSchema)
+def get_income_for_year(year: str):
+    return VehicleServiceController.get_income_for_year(year)

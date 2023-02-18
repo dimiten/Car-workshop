@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.vehicle_services.models import VehicleService
+from app.service_types.models import ServiceType
 
 
 class VehicleServiceRepository:
@@ -66,7 +67,8 @@ class VehicleServiceRepository:
     def get_number_of_services_for_month(self, number_of_month: str, year: str):
         try:
             number_of_services = self.db.query(VehicleService.service_type_name,
-                                               func.count(VehicleService.service_type_name).label("number_of_services")).filter(
+                                               func.count(VehicleService.service_type_name).label(
+                                                   "number_of_services")).filter(
                 VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).group_by(
                 VehicleService.service_type_name).all()
             return number_of_services
@@ -76,9 +78,30 @@ class VehicleServiceRepository:
     def get_number_of_services_for_year(self, year: str):
         try:
             number_of_services = self.db.query(VehicleService.service_type_name,
-                                               func.count(VehicleService.service_type_name).label("number_of_services")).filter(
+                                               func.count(VehicleService.service_type_name).label(
+                                                   "number_of_services")).filter(
                 VehicleService.date_of_service.like(f"{year}-%-%")).group_by(
                 VehicleService.service_type_name).all()
             return number_of_services
+        except Exception as e:
+            raise e
+
+    def get_income_for_month(self, number_of_month: str, year: str):
+        try:
+            # income_for_month = self.db.query(func.sum(ServiceType.cost).label("income"))
+            # .filter(VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).first()[0]
+            income_for_month = self.db.query(func.sum(ServiceType.cost).label("income_for_month")).join(
+                VehicleService).filter(VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).first()
+            return income_for_month
+        except Exception as e:
+            raise e
+
+    def get_income_for_year(self, year: str):
+        try:
+            # income_for_month = self.db.query(func.sum(ServiceType.cost).label("income"))
+            # .filter(VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).first()[0]
+            income_for_year = self.db.query(func.sum(ServiceType.cost).label("income_for_year")).join(
+                VehicleService).filter(VehicleService.date_of_service.like(f"{year}-%-%")).first()
+            return income_for_year
         except Exception as e:
             raise e
