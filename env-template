@@ -6,3 +6,10 @@ DB_USER=
 DB_PASSWORD=
 
 DB_NAME=
+
+MAIL_USERNAME=if you use sendgrid for smtp - it will tell you which username to use
+MAIL_PASSWORD=same as above (in sendgrid it is called apikey)
+MAIL_PORT=587
+MAIL_SERVER=smtp.sendgrid.net
+
+MAIL_FROM=address you can verify/access - from which you will send mail (sender authentication in SendGrid)
