@@ -13,10 +13,40 @@ class Employee(Base):
     position = Column(String(50))
     is_admin = Column(Boolean, default=False)
 
-    def __init__(self, name, surname, email, phone_number, position, is_admin = False):
+    def __init__(self, name, surname, email, phone_number, position, is_admin=False):
         self.name = name
         self.surname = surname
         self.email = email
         self.phone_number = phone_number
         self.position = position
         self.is_admin = is_admin
+
+    def __eq__(self, other):
+        if self.name != other.name:
+            return False
+        if self.surname != other.surname:
+            return False
+        if self.email != other.email:
+            return False
+        if self.phone_number != other.phone_number:
+            return False
+        if self.position != other.position:
+            return False
+        if self.is_admin != other.is_admin:
+            return False
+        return True
+
+    def __ne__(self, other):
+        if self.name == other.name:
+            return False
+        if self.surname == other.surname:
+            return False
+        if self.email == other.email:
+            return False
+        if self.phone_number == other.phone_number:
+            return False
+        if self.position == other.position:
+            return False
+        if self.is_admin == other.is_admin:
+            return False
+        return True

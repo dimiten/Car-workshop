@@ -6,6 +6,7 @@ DB_USER=
 DB_PASSWORD=
 
 DB_NAME=
+DB_NAME_TEST=
 
 MAIL_USERNAME=if you use sendgrid for smtp - it will tell you which username to use
 MAIL_PASSWORD=same as above (in sendgrid it is called apikey)
