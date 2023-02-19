@@ -18,3 +18,29 @@ class Customer(Base):
         self.email = email
         self.phone_number = phone_number
         self.is_regular = is_regular
+
+    def __eq__(self, other):
+        if self.name != other.name:
+            return False
+        if self.surname != other.surname:
+            return False
+        if self.email != other.email:
+            return False
+        if self.phone_number != other.phone_number:
+            return False
+        if self.is_regular != other.is_regular:
+            return False
+        return True
+
+    def __ne__(self, other):
+        if self.name == other.name:
+            return False
+        if self.surname == other.surname:
+            return False
+        if self.email == other.email:
+            return False
+        if self.phone_number == other.phone_number:
+            return False
+        if self.is_regular == other.is_regular:
+            return False
+        return True
