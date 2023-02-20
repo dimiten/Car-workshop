@@ -2,7 +2,6 @@ from fastapi import APIRouter
 from app.vehicle_services.controller import VehicleServiceController
 from app.vehicle_services.schemas import *
 from enum import Enum
-from datetime import date
 
 vehicle_service_router = APIRouter(tags=["Vehicle services"], prefix="/api/vehicle-services")
 

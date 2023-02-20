@@ -1,14 +1,15 @@
 from app.customers.services import CustomerServices
 from fastapi import HTTPException, Response
 from app.customers.exceptions import *
+from datetime import date
 
 
 class CustomerController:
 
     @staticmethod
-    def create_customer(name: str, surname: str, email: str, phone_number: str):
+    def create_customer(name: str, surname: str, email: str, phone_number: str, date_of_registration: date):
         try:
-            customer = CustomerServices.create_customer(name, surname, email, phone_number)
+            customer = CustomerServices.create_customer(name, surname, email, phone_number, date_of_registration)
             return customer
         except CustomerEmailException as e:
             raise HTTPException(status_code=e.status_code, detail=e.detail)
@@ -59,3 +60,23 @@ class CustomerController:
         else:
             raise HTTPException(status_code=400,
                                 detail=f"Customer with provided id: {customer_id} doesn't have any vehicles")
+
+    @staticmethod
+    def get_new_customers_for_month(number_of_month: str, year: str):
+        new_customers = CustomerServices.get_new_customers_for_month(number_of_month, year)
+        if new_customers:
+            return new_customers
+        else:
+            raise HTTPException(status_code=400,
+                                detail=f"There are no new customers for provided number of month: {number_of_month}"
+                                       f", and year: {year}")
+
+    @staticmethod
+    def get_new_customers_for_year(year: str):
+        new_customers = CustomerServices.get_new_customers_for_year(year)
+        if new_customers:
+            return new_customers
+        else:
+            raise HTTPException(status_code=400,
+                                detail=f"There are no new customers for provided "
+                                       f"year: {year}")

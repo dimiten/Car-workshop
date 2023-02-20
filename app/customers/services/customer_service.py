@@ -1,12 +1,13 @@
 from app.customers.repositories import CustomerRepository
 from app.db.database import SessionLocal
 from app.customers.exceptions import *
+from datetime import date
 
 
 class CustomerServices:
 
     @staticmethod
-    def create_customer(name, surname, email, phone_number):
+    def create_customer(name: str, surname: str, email: str, phone_number: str, date_of_registration: date):
         try:
             with SessionLocal() as db:
                 customer_repository = CustomerRepository(db)
@@ -15,8 +16,9 @@ class CustomerServices:
                                                  detail=f"Customer with provided email - {email} already exists.")
                 if phone_number in customer_repository.get_customers_phone_numbers():
                     raise CustomerPhoneNumberException(status_code=400,
-                                                       detail=f"Customer with provided phone number - {phone_number} already exists.")
-                return customer_repository.create_customer(name, surname, email, phone_number)
+                                                       detail=f"Customer with provided phone number - {phone_number} "
+                                                              f"already exists.")
+                return customer_repository.create_customer(name, surname, email, phone_number, date_of_registration)
         except Exception as e:
             raise e
 
@@ -62,5 +64,23 @@ class CustomerServices:
             with SessionLocal() as db:
                 customer_repository = CustomerRepository(db)
                 return customer_repository.get_all_vehicles_from_customer(customer_id)
+        except Exception as e:
+            raise e
+
+    @staticmethod
+    def get_new_customers_for_month(number_of_month: str, year: str):
+        try:
+            with SessionLocal() as db:
+                customer_repository = CustomerRepository(db)
+                return customer_repository.get_new_customers_for_month(number_of_month, year)
+        except Exception as e:
+            raise e
+
+    @staticmethod
+    def get_new_customers_for_year(year: str):
+        try:
+            with SessionLocal() as db:
+                customer_repository = CustomerRepository(db)
+                return customer_repository.get_new_customers_for_year(year)
         except Exception as e:
             raise e

@@ -1,7 +1,7 @@
 from app.db.database import Base
 from sqlalchemy import Column, String, ForeignKey, Date
 from uuid import uuid4
-from datetime import date, datetime
+from datetime import date
 
 
 class VehicleService(Base):

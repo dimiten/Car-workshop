@@ -1,7 +1,9 @@
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from app.customers.models import Customer
 from app.vehicles.models import Vehicle
+from datetime import date
 
 
 class CustomerRepository:
@@ -9,9 +11,9 @@ class CustomerRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def create_customer(self, name, surname, email, phone_number):
+    def create_customer(self, name: str, surname: str, email: str, phone_number: str, date_of_registration: date):
         try:
-            customer = Customer(name, surname, email, phone_number)
+            customer = Customer(name, surname, email, phone_number, date_of_registration)
             self.db.add(customer)
             self.db.commit()
             self.db.refresh(customer)
@@ -73,3 +75,20 @@ class CustomerRepository:
             return vehicles
         except Exception as e:
             raise e
+
+    def get_new_customers_for_month(self, number_of_month: str, year: str):
+        try:
+            new_customers_for_month = self.db.query(func.count(Customer.id).label("number_of_new_customers")).\
+                filter(Customer.date_of_registration.like(f"{year}-{number_of_month}-%")).first()
+            return new_customers_for_month
+        except Exception as e:
+            raise e
+
+    def get_new_customers_for_year(self, year: str):
+        try:
+            new_customers_for_month = self.db.query(func.count(Customer.id).label("number_of_new_customers")).\
+                filter(Customer.date_of_registration.like(f"{year}-%-%")).first()
+            return new_customers_for_month
+        except Exception as e:
+            raise e
+

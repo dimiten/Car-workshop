@@ -1,4 +1,5 @@
 from pydantic import BaseModel, UUID4, EmailStr
+from datetime import date
 
 
 class CustomerSchema(BaseModel):
@@ -7,6 +8,7 @@ class CustomerSchema(BaseModel):
     surname: str
     email: str
     phone_number: str
+    date_of_registration: date
     is_regular: bool
 
     class Config:
@@ -18,6 +20,14 @@ class CustomerSchemaIn(BaseModel):
     surname: str
     email: EmailStr
     phone_number: str
+    date_of_registration: date
+
+    class Config:
+        orm_mode = True
+
+
+class NumberNewCustomersSchema(BaseModel):
+    number_of_new_customers: int
 
     class Config:
         orm_mode = True

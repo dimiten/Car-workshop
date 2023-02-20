@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date
 
 from app.vehicle_services.repositories import VehicleServiceRepository
 from app.db.database import SessionLocal
@@ -13,8 +13,7 @@ class VehicleServicesServices:
     @staticmethod
     def create_vehicle_service(date_of_service: date, vehicle_id: str, employee_id: str, service_type_name: str):
         try:
-            if not datetime.strptime(str(date_of_service), "%Y-%m-%d"):
-                raise ValueError
+            # datetime.datetime.strptime(str(date_of_service), r"%Y-%m-%d")
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
                 vehicle_repository = VehicleRepository(db)

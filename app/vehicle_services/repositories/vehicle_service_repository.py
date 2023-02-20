@@ -88,8 +88,6 @@ class VehicleServiceRepository:
 
     def get_income_for_month(self, number_of_month: str, year: str):
         try:
-            # income_for_month = self.db.query(func.sum(ServiceType.cost).label("income"))
-            # .filter(VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).first()[0]
             income_for_month = self.db.query(func.sum(ServiceType.cost).label("income_for_month")).join(
                 VehicleService).filter(VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).first()
             return income_for_month
