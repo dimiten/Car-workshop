@@ -61,3 +61,8 @@ def get_new_customers_for_month(number_of_month: Month, year: str):
 @customer_router.get("get-new-customers-for-year", response_model=NumberNewCustomersSchema)
 def get_new_customers_for_year(year: str):
     return CustomerController.get_new_customers_for_year(year)
+
+
+@customer_router.get("get-customers-for-years", response_model=int)
+def get_customers_for_years(number_of_years: int):
+    return CustomerController.get_customers_for_years(number_of_years)

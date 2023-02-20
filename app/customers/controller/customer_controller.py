@@ -80,3 +80,13 @@ class CustomerController:
             raise HTTPException(status_code=400,
                                 detail=f"There are no new customers for provided "
                                        f"year: {year}")
+
+    @staticmethod
+    def get_customers_for_years(number_of_years: int):
+        customers = CustomerServices.get_customers_for_years(number_of_years)
+        if customers:
+            return customers
+        else:
+            raise HTTPException(status_code=400,
+                                detail=f"There are no new customers for provided number of "
+                                       f"years: {number_of_years}")

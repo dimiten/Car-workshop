@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.customers.models import Customer
 from app.vehicles.models import Vehicle
-from datetime import date
+from datetime import date, datetime
+import datetime
 
 
 class CustomerRepository:
@@ -78,7 +79,7 @@ class CustomerRepository:
 
     def get_new_customers_for_month(self, number_of_month: str, year: str):
         try:
-            new_customers_for_month = self.db.query(func.count(Customer.id).label("number_of_new_customers")).\
+            new_customers_for_month = self.db.query(func.count(Customer.id).label("number_of_new_customers")). \
                 filter(Customer.date_of_registration.like(f"{year}-{number_of_month}-%")).first()
             return new_customers_for_month
         except Exception as e:
@@ -86,9 +87,19 @@ class CustomerRepository:
 
     def get_new_customers_for_year(self, year: str):
         try:
-            new_customers_for_month = self.db.query(func.count(Customer.id).label("number_of_new_customers")).\
+            new_customers_for_month = self.db.query(func.count(Customer.id).label("number_of_new_customers")). \
                 filter(Customer.date_of_registration.like(f"{year}-%-%")).first()
             return new_customers_for_month
         except Exception as e:
             raise e
 
+    def get_customers_for_years(self, number_of_years: int):
+        try:
+            current_year = datetime.datetime.now().year
+            year = str(int(current_year) - number_of_years)
+            wanted_date = datetime.date(int(year), datetime.datetime.now().month, datetime.datetime.now().day)
+            customers_for_years = self.db.query(func.count(Customer.id)). \
+                filter(Customer.date_of_registration <= wanted_date).first()[0]
+            return customers_for_years
+        except Exception as e:
+            raise e

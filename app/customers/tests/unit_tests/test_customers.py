@@ -1,5 +1,6 @@
 import pytest
 from sqlalchemy.exc import IntegrityError
+import datetime
 
 from app.tests import TestClass, TestingSessionLocal
 from app.customers.repositories import CustomerRepository
@@ -11,48 +12,56 @@ class TestCustomerRepo(TestClass):
     def create_customers_for_methods(self):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
-            customer_repository.create_customer("Ime1", "Prezime1", "email1@gmail.com", "+3813891383")
-            customer_repository.create_customer("Ime2", "Prezime2", "email2@gmail.com", "+3813459183")
-            customer_repository.create_customer("Ime3", "Prezime3", "email3@gmail.com", "+3813131321")
-            customer_repository.create_customer("Ime4", "Prezime4", "email4@gmail.com", "+3813989868")
+            date = datetime.datetime(2023, 2, 20)
+            customer_repository.create_customer("Ime1", "Prezime1", "email1@gmail.com", "+3813891383", date)
+            customer_repository.create_customer("Ime2", "Prezime2", "email2@gmail.com", "+3813459183", date)
+            customer_repository.create_customer("Ime3", "Prezime3", "email3@gmail.com", "+3813131321", date)
+            customer_repository.create_customer("Ime4", "Prezime4", "email4@gmail.com", "+3813989868", date)
 
     def test_create_customer(self):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
-            customer = customer_repository.create_customer("Marko", "Savic", "markosavic@gmail.com", "+38193193193")
+            date = datetime.date(2023, 2, 20)
+            customer = customer_repository.create_customer("Marko", "Savic", "markosavic@gmail.com",
+                                                           "+38193193193", date)
             assert customer.name == "Marko"
             assert customer.surname == "Savic"
             assert customer.email == "markosavic@gmail.com"
             assert customer.phone_number == "+38193193193"
+            assert customer.date_of_registration == date
             assert customer.is_regular is False
 
     def test_create_customer_fail(self):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
+            date = datetime.date(2023, 2, 20)
             customer = customer_repository.create_customer("Marko", "Savic",
-                                                           "markosavic@gmail.com", "+38193193193")
+                                                           "markosavic@gmail.com", "+38193193193", date)
             assert not customer.name != "Marko"
             assert not customer.surname != "Savic"
             assert not customer.email != "markosavic@gmail.com"
             assert not customer.phone_number != "+38193193193"
+            assert not customer.date_of_registration != date
             assert customer.is_regular is not True
             with pytest.raises(IntegrityError) as e:
                 customer = customer_repository.create_customer("Marko", "Savic",
-                                                               "markosavic@gmail.com", "+38193193193")
+                                                               "markosavic@gmail.com", "+38193193193", date)
 
     def test_get_customer_by_id(self):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
+            date = datetime.datetime(2023, 2, 20)
             customer = customer_repository.create_customer("Marko", "Savic",
-                                                           "markosavic@gmail.com", "+38193193193")
+                                                           "markosavic@gmail.com", "+38193193193", date)
             customer2 = customer_repository.get_customer_by_id(customer.id)
             assert customer == customer2
 
     def test_get_customer_by_id_fail(self):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
+            date = datetime.datetime(2023, 2, 20)
             customer = customer_repository.create_customer("Marko", "Savic",
-                                                           "markosavic@gmail.com", "+38193193193")
+                                                           "markosavic@gmail.com", "+38193193193", date)
             customer2 = customer_repository.get_customer_by_id(customer.id)
             assert not customer != customer2
 
@@ -73,30 +82,34 @@ class TestCustomerRepo(TestClass):
     def test_delete_customer_by_id(self):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
+            date = datetime.datetime(2023, 2, 20)
             customer = customer_repository.create_customer("Marko", "Savic",
-                                                           "markosavic@gmail.com", "+38193193193")
+                                                           "markosavic@gmail.com", "+38193193193", date)
             assert customer_repository.delete_customer_by_id(customer.id) is True
 
     def test_delete_customer_by_id_fail(self):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
+            date = datetime.datetime(2023, 2, 20)
             customer = customer_repository.create_customer("Marko", "Savic",
-                                                           "markosavic@gmail.com", "+38193193193")
+                                                           "markosavic@gmail.com", "+38193193193", date)
             assert customer_repository.delete_customer_by_id(customer.id) is not False
 
     def test_update_customer_is_regular(self):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
+            date = datetime.datetime(2023, 2, 20)
             customer = customer_repository.create_customer("Marko", "Savic",
-                                                           "markosavic@gmail.com", "+38193193193")
+                                                           "markosavic@gmail.com", "+38193193193", date)
             customer_repository.update_customer_is_regular(customer.id, True)
             assert customer.is_regular is True
 
     def test_update_customer_is_regular_fail(self):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
+            date = datetime.datetime(2023, 2, 20)
             customer = customer_repository.create_customer("Marko", "Savic",
-                                                           "markosavic@gmail.com", "+38193193193")
+                                                           "markosavic@gmail.com", "+38193193193", date)
             customer_repository.update_customer_is_regular(customer.id, True)
             assert customer.is_regular is not False
 
@@ -132,10 +145,11 @@ class TestCustomerRepo(TestClass):
 
     def test_get_all_vehicles_from_customer(self):
         with TestingSessionLocal() as db:
+            date = datetime.datetime(2023, 2, 20)
             customer_repository = CustomerRepository(db)
             vehicle_repository = VehicleRepository(db)
             customer = customer_repository.create_customer("Marko", "Savic",
-                                                           "markosavic@gmail.com", "+38193193193")
+                                                           "markosavic@gmail.com", "+38193193193", date)
             vehicle_repository.create_vehicle("hgh0313", "BMW", "M5", "2017", customer.id)
             vehicle_repository.create_vehicle("mnb0313", "BMW", "M7", "2010", customer.id)
             vehicle_repository.create_vehicle("zxc0313", "BMW", "M3", "2019", customer.id)
@@ -148,8 +162,9 @@ class TestCustomerRepo(TestClass):
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             vehicle_repository = VehicleRepository(db)
+            date = datetime.datetime(2023, 2, 20)
             customer = customer_repository.create_customer("Marko", "Savic",
-                                                           "markosavic@gmail.com", "+38193193193")
+                                                           "markosavic@gmail.com", "+38193193193", date)
             vehicle_repository.create_vehicle("hgh0313", "BMW", "M5", "2017", customer.id)
             vehicle_repository.create_vehicle("mnb0313", "BMW", "M7", "2010", customer.id)
             vehicle_repository.create_vehicle("zxc0313", "BMW", "M3", "2019", customer.id)

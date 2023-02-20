@@ -84,3 +84,12 @@ class CustomerServices:
                 return customer_repository.get_new_customers_for_year(year)
         except Exception as e:
             raise e
+
+    @staticmethod
+    def get_customers_for_years(number_of_years: int):
+        try:
+            with SessionLocal() as db:
+                customer_repository = CustomerRepository(db)
+                return customer_repository.get_customers_for_years(number_of_years)
+        except Exception as e:
+            raise e
