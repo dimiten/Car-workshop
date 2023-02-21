@@ -1,12 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.service_types.controller import ServiceTypeController
 from app.service_types.schemas import ServiceTypeSchema
+from app.employees.controller import JWTBearer
 
 
 service_type_router = APIRouter(tags=["Service types"], prefix="/api/service-types")
 
 
-@service_type_router.post("/add-new-service-type", response_model=ServiceTypeSchema)
+@service_type_router.post("/add-new-service-type", response_model=ServiceTypeSchema, dependencies=[Depends(JWTBearer("admin"))])
 def create_service_type(service_type: ServiceTypeSchema):
     return ServiceTypeController.create_service_type(service_type.name, service_type.cost)
 
@@ -16,7 +17,7 @@ def get_service_type_by_name(name: str):
     return ServiceTypeController.get_service_type_by_name(name)
 
 
-@service_type_router.get("/get-all-service-types", response_model=list[ServiceTypeSchema])
+@service_type_router.get("/get-all-service-types", response_model=list[ServiceTypeSchema], dependencies=[Depends(JWTBearer("not admin"))])
 def get_all_service_types():
     return ServiceTypeController.get_all_service_types()
 

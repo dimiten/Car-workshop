@@ -9,14 +9,16 @@ class Employee(Base):
     name = Column(String(50))
     surname = Column(String(50))
     email = Column(String(50), unique=True)
+    password = Column(String(50), default=None)
     phone_number = Column(String(15), unique=True)
     position = Column(String(50))
     is_admin = Column(Boolean, default=False)
 
-    def __init__(self, name, surname, email, phone_number, position, is_admin=False):
+    def __init__(self, name, surname, email, phone_number, position, password=None, is_admin=False):
         self.name = name
         self.surname = surname
         self.email = email
+        self.password = password
         self.phone_number = phone_number
         self.position = position
         self.is_admin = is_admin

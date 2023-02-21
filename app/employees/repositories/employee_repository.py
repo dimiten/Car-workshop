@@ -18,6 +18,16 @@ class EmployeeRepository:
         except IntegrityError as e:
             raise e
 
+    def create_employee_with_password(self, name, surname, email, phone_number, position, password):
+        try:
+            employee = Employee(name, surname, email, phone_number, position, password=password)
+            self.db.add(employee)
+            self.db.commit()
+            self.db.refresh(employee)
+            return employee
+        except IntegrityError as e:
+            raise e
+
     def get_employee_by_id(self, employee_id: str):
         try:
             employee = self.db.query(Employee).filter(Employee.id == employee_id).first()
@@ -63,5 +73,12 @@ class EmployeeRepository:
         try:
             employees_phone_numbers = self.db.query(Employee.phone_number).all()
             return [item for t in employees_phone_numbers for item in t]
+        except Exception as e:
+            raise e
+
+    def get_employee_by_email(self, email: str):
+        try:
+            employee = self.db.query(Employee.email == email).first()
+            return employee
         except Exception as e:
             raise e
