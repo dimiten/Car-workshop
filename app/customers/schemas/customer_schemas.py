@@ -1,8 +1,12 @@
+"""Customers Schemas"""
+
+
 from pydantic import BaseModel, UUID4, EmailStr
 from datetime import date
 
 
 class CustomerSchema(BaseModel):
+    """Customer schema"""
     id: UUID4
     name: str
     surname: str
@@ -16,6 +20,7 @@ class CustomerSchema(BaseModel):
 
 
 class CustomerSchemaIn(BaseModel):
+    """Customer schema when creating a customer"""
     name: str
     surname: str
     email: EmailStr
@@ -27,6 +32,7 @@ class CustomerSchemaIn(BaseModel):
 
 
 class NumberNewCustomersSchema(BaseModel):
+    """Customer schema when returning number of new customers"""
     number_of_new_customers: int
 
     class Config:

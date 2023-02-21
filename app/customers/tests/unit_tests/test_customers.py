@@ -1,3 +1,6 @@
+"""Unit tests for Customer"""
+
+
 import pytest
 from sqlalchemy.exc import IntegrityError
 import datetime
@@ -8,8 +11,10 @@ from app.vehicles.repositories import VehicleRepository
 
 
 class TestCustomerRepo(TestClass):
+    """Customer test repo"""
 
     def create_customers_for_methods(self):
+        """Creating customer for testing"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             date = datetime.datetime(2023, 2, 20)
@@ -19,6 +24,7 @@ class TestCustomerRepo(TestClass):
             customer_repository.create_customer("Ime4", "Prezime4", "email4@gmail.com", "+3813989868", date)
 
     def test_create_customer(self):
+        """Test for creating a customer"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             date = datetime.date(2023, 2, 20)
@@ -32,6 +38,7 @@ class TestCustomerRepo(TestClass):
             assert customer.is_regular is False
 
     def test_create_customer_fail(self):
+        """Test for creating a customer fail"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             date = datetime.date(2023, 2, 20)
@@ -48,6 +55,7 @@ class TestCustomerRepo(TestClass):
                                                                "markosavic@gmail.com", "+38193193193", date)
 
     def test_get_customer_by_id(self):
+        """Test for getting a customer by id"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             date = datetime.datetime(2023, 2, 20)
@@ -57,6 +65,7 @@ class TestCustomerRepo(TestClass):
             assert customer == customer2
 
     def test_get_customer_by_id_fail(self):
+        """Test for getting a customer by id fail"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             date = datetime.datetime(2023, 2, 20)
@@ -66,6 +75,7 @@ class TestCustomerRepo(TestClass):
             assert not customer != customer2
 
     def test_get_all_customers(self):
+        """Test for getting all customers"""
         self.create_customers_for_methods()
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
@@ -73,6 +83,7 @@ class TestCustomerRepo(TestClass):
             assert len(customers) == 4
 
     def test_get_all_customers_fail(self):
+        """Test for getting all customers fail"""
         self.create_customers_for_methods()
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
@@ -80,6 +91,7 @@ class TestCustomerRepo(TestClass):
             assert not len(customers) != 4
 
     def test_delete_customer_by_id(self):
+        """Test for deleting a customer by id"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             date = datetime.datetime(2023, 2, 20)
@@ -88,6 +100,7 @@ class TestCustomerRepo(TestClass):
             assert customer_repository.delete_customer_by_id(customer.id) is True
 
     def test_delete_customer_by_id_fail(self):
+        """Test for deleting a customer by id fail"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             date = datetime.datetime(2023, 2, 20)
@@ -96,6 +109,7 @@ class TestCustomerRepo(TestClass):
             assert customer_repository.delete_customer_by_id(customer.id) is not False
 
     def test_update_customer_is_regular(self):
+        """Test for updating a customer"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             date = datetime.datetime(2023, 2, 20)
@@ -105,6 +119,7 @@ class TestCustomerRepo(TestClass):
             assert customer.is_regular is True
 
     def test_update_customer_is_regular_fail(self):
+        """Test for updating a customer fail"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             date = datetime.datetime(2023, 2, 20)
@@ -114,6 +129,7 @@ class TestCustomerRepo(TestClass):
             assert customer.is_regular is not False
 
     def test_get_customers_emails(self):
+        """Test for getting customers' emails"""
         self.create_customers_for_methods()
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
@@ -122,6 +138,7 @@ class TestCustomerRepo(TestClass):
                    set(customers_emails)
 
     def test_get_customers_emails_fail(self):
+        """Test for getting customers' emails fail"""
         self.create_customers_for_methods()
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
@@ -130,6 +147,7 @@ class TestCustomerRepo(TestClass):
                    set(customers_emails)
 
     def test_get_customers_phone_numbers(self):
+        """Test for getting customers' phone numbers"""
         self.create_customers_for_methods()
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
@@ -137,6 +155,7 @@ class TestCustomerRepo(TestClass):
             assert {"+3813891383", "+3813459183", "+3813131321", "+3813989868"} == set(customers_phone_numbers)
 
     def test_get_customers_phone_numbers_fail(self):
+        """Test for getting customers' phone numbers"""
         self.create_customers_for_methods()
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
@@ -144,6 +163,7 @@ class TestCustomerRepo(TestClass):
             assert not {"+3813891383", "+3813459183", "+3813131321", "+3813989868"} != set(customers_phone_numbers)
 
     def test_get_all_vehicles_from_customer(self):
+        """Test for getting vehicles from customer"""
         with TestingSessionLocal() as db:
             date = datetime.datetime(2023, 2, 20)
             customer_repository = CustomerRepository(db)
@@ -159,6 +179,7 @@ class TestCustomerRepo(TestClass):
             assert len(customers_vehicles) == 3
 
     def test_get_all_vehicles_from_customer_fail(self):
+        """Test for getting vehicles from customer"""
         with TestingSessionLocal() as db:
             customer_repository = CustomerRepository(db)
             vehicle_repository = VehicleRepository(db)

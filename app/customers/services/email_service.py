@@ -1,3 +1,6 @@
+"""Email Service"""
+
+
 from fastapi_mail import ConnectionConfig, MessageSchema, MessageType, FastMail
 from pydantic import EmailStr
 import asyncio

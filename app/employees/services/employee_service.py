@@ -1,6 +1,7 @@
 from app.employees.repositories import EmployeeRepository
 from app.db.database import SessionLocal
 from app.employees.exceptions import *
+import hashlib
 
 
 class EmployeeServices:
@@ -15,7 +16,8 @@ class EmployeeServices:
                                                  detail=f"Employee with provided email - {email} already exists.")
                 if phone_number in employee_repository.get_employees_phone_numbers():
                     raise EmployeePhoneNumberException(status_code=400,
-                                                       detail=f"Employee with provided phone number - {phone_number} already exists.")
+                                                       detail=f"Employee with provided phone number"
+                                                              f" - {phone_number} already exists.")
                 return employee_repository.create_employee(name, surname, email, phone_number, position)
         except Exception as e:
             raise e
@@ -30,8 +32,10 @@ class EmployeeServices:
                                                  detail=f"Employee with provided email - {email} already exists.")
                 if phone_number in employee_repository.get_employees_phone_numbers():
                     raise EmployeePhoneNumberException(status_code=400,
-                                                       detail=f"Employee with provided phone number - {phone_number} already exists.")
-                return employee_repository.create_employee_with_password(name, surname, email, phone_number, position, password)
+                                                       detail=f"Employee with provided phone number"
+                                                              f" - {phone_number} already exists.")
+                return employee_repository.create_employee_with_password(name, surname, email, phone_number, position,
+                                                                         password)
         except Exception as e:
             raise e
 

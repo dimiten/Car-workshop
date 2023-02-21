@@ -77,8 +77,5 @@ class EmployeeRepository:
             raise e
 
     def get_employee_by_email(self, email: str):
-        try:
-            employee = self.db.query(Employee.email == email).first()
-            return employee
-        except Exception as e:
-            raise e
+        employee = self.db.query(Employee).filter(Employee.email == email).first()
+        return employee

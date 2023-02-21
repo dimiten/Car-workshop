@@ -1,9 +1,3 @@
-import time
-from typing import Dict
-
-import jwt
-
-from app.config import settings
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
@@ -24,8 +18,9 @@ class JWTBearer(HTTPBearer):
             if not payload.get("valid"):
                 raise HTTPException(status_code=403, detail="Invalid token or expired token.")
             if payload.get("role") != self.role:
-                raise HTTPException(status_code=403, detail="User with provided role is not permitted to access this "
-                                                            "route.")
+                raise HTTPException(status_code=403,
+                                    detail="Employee with provided role is not permitted to access this "
+                                           "route.")
             return credentials.credentials
         else:
             raise HTTPException(status_code=403, detail="Invalid authorization code.")

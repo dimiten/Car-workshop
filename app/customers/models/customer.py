@@ -1,10 +1,13 @@
-from app.db.database import Base
-from sqlalchemy import Column, String, Boolean, Date
+"""Customer model"""
+
 from uuid import uuid4
 from datetime import date
+from sqlalchemy import Column, String, Boolean, Date
+from app.db.database import Base
 
 
 class Customer(Base):
+    """Customer class"""
     __tablename__ = "customers"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
     name = Column(String(50))

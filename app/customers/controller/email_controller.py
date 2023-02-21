@@ -1,3 +1,6 @@
+"""Email Controller"""
+
+
 # from app.customers.services import EmailServices
 # from pydantic import EmailStr
 # import datetime
@@ -12,5 +15,3 @@
 #     def send_mail(email: str):
 #
 #         EmailServices.send_email(EmailStr[email])
-
-
