@@ -1,12 +1,17 @@
+"""Service type services"""
+
+
 from app.service_types.repositories import ServiceTypeRepository
 from app.db.database import SessionLocal
 from app.service_types.exceptions import ServiceTypeExistsException
 
 
 class ServiceTypeServices:
+    """ServiceTypeServices class"""
 
     @staticmethod
     def create_service_type(name, cost):
+        """Creates a service type"""
         try:
             with SessionLocal() as db:
                 service_type_repository = ServiceTypeRepository(db)
@@ -20,6 +25,7 @@ class ServiceTypeServices:
 
     @staticmethod
     def get_service_type_by_name(name: str):
+        """Returns a service type by name"""
         try:
             with SessionLocal() as db:
                 service_type_repository = ServiceTypeRepository(db)
@@ -29,6 +35,7 @@ class ServiceTypeServices:
 
     @staticmethod
     def get_all_service_types():
+        """Returns all service types"""
         try:
             with SessionLocal() as db:
                 service_type_repository = ServiceTypeRepository(db)
@@ -38,6 +45,7 @@ class ServiceTypeServices:
 
     @staticmethod
     def delete_service_type_by_name(name: str):
+        """Deletes service type by name"""
         try:
             with SessionLocal() as db:
                 service_type_repository = ServiceTypeRepository(db)
@@ -47,6 +55,7 @@ class ServiceTypeServices:
 
     @staticmethod
     def update_service_type_cost(name: str, cost: float):
+        """Updates service type cost"""
         try:
             with SessionLocal() as db:
                 service_type_repository = ServiceTypeRepository(db)

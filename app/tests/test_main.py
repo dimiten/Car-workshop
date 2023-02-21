@@ -1,3 +1,6 @@
+"""Tests"""
+
+
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -17,6 +20,7 @@ client = TestClient(app)
 
 
 class TestClass:
+    """Test class"""
 
     def setup_method(self, method):
         """setup any state tied to the execution of the given method in a
