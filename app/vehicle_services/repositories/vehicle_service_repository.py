@@ -1,3 +1,6 @@
+"""Vehicle service repository"""
+
+
 from datetime import date
 
 from sqlalchemy.exc import IntegrityError
@@ -8,11 +11,13 @@ from app.service_types.models import ServiceType
 
 
 class VehicleServiceRepository:
+    """VehicleServiceRepository class"""
 
     def __init__(self, db: Session):
         self.db = db
 
     def create_vehicle_service(self, date_of_service: date, vehicle_id: str, employee_id: str, service_type_name: str):
+        """Creates a vehicle service"""
         try:
             vehicle_service = VehicleService(date_of_service, vehicle_id, employee_id, service_type_name)
             self.db.add(vehicle_service)
@@ -23,6 +28,7 @@ class VehicleServiceRepository:
             raise e
 
     def get_vehicle_service_by_id(self, vehicle_service_id: str):
+        """Get vehicle service by id"""
         try:
             vehicle_service = self.db.query(VehicleService).filter(VehicleService.id == vehicle_service_id).first()
             return vehicle_service
@@ -30,6 +36,7 @@ class VehicleServiceRepository:
             raise e
 
     def get_all_vehicle_services(self):
+        """Get all vehicle services"""
         try:
             vehicle_services = self.db.query(VehicleService).all()
             return vehicle_services
@@ -37,6 +44,7 @@ class VehicleServiceRepository:
             raise e
 
     def delete_vehicle_service_by_id(self, vehicle_service_id: str):
+        """Delete vehicle service by id"""
         try:
             vehicle_service = self.db.query(VehicleService).filter(VehicleService.id == vehicle_service_id).first()
             self.db.delete(vehicle_service)
@@ -47,6 +55,7 @@ class VehicleServiceRepository:
 
     def update_vehicle_service(self, vehicle_service_id: str, date_of_service: str = None, vehicle_id: str = None,
                                employee_id: str = None, service_type_name: str = None):
+        """Update vehicle service"""
         try:
             vehicle_service = self.db.query(VehicleService).filter(VehicleService.id == vehicle_service_id).first()
             if date_of_service is not None:
@@ -65,6 +74,7 @@ class VehicleServiceRepository:
             raise e
 
     def get_number_of_services_for_month(self, number_of_month: str, year: str):
+        """Get the number of services for a specific month"""
         try:
             number_of_services = self.db.query(VehicleService.service_type_name,
                                                func.count(VehicleService.service_type_name).label(
@@ -76,6 +86,7 @@ class VehicleServiceRepository:
             raise e
 
     def get_number_of_services_for_year(self, year: str):
+        """Get the number of services for a specific year"""
         try:
             number_of_services = self.db.query(VehicleService.service_type_name,
                                                func.count(VehicleService.service_type_name).label(
@@ -87,6 +98,7 @@ class VehicleServiceRepository:
             raise e
 
     def get_income_for_month(self, number_of_month: str, year: str):
+        """Get the income for a specific month"""
         try:
             income_for_month = self.db.query(func.sum(ServiceType.cost).label("income_for_month")).join(
                 VehicleService).filter(VehicleService.date_of_service.like(f"{year}-{number_of_month}-%")).first()
@@ -95,6 +107,7 @@ class VehicleServiceRepository:
             raise e
 
     def get_income_for_year(self, year: str):
+        """Get the income for a specific year"""
         try:
             income_for_year = self.db.query(func.sum(ServiceType.cost).label("income_for_year")).join(
                 VehicleService).filter(VehicleService.date_of_service.like(f"{year}-%-%")).first()
@@ -103,6 +116,7 @@ class VehicleServiceRepository:
             raise e
 
     def get_most_popular_service_for_month(self, number_of_month: str, year: str):
+        """Get the most popular service for a specific month"""
         try:
             most_popular_service = self.db.query(VehicleService.service_type_name,
                                                  func.count(VehicleService.service_type_name).label(
@@ -114,6 +128,7 @@ class VehicleServiceRepository:
             raise e
 
     def get_most_popular_service_for_year(self, year: str):
+        """Get the most popular service for a specific year"""
         try:
             most_popular_service = self.db.query(VehicleService.service_type_name,
                                                  func.count(VehicleService.service_type_name).label(

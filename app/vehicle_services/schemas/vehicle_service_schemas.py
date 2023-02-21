@@ -1,8 +1,12 @@
+"""Vehicle services schemas"""
+
+
 from datetime import date
 from pydantic import BaseModel, UUID4
 
 
 class VehicleServiceSchema(BaseModel):
+    """Vehicle service schema"""
     id: UUID4
     date_of_service: date
     vehicle_id: str
@@ -14,6 +18,7 @@ class VehicleServiceSchema(BaseModel):
 
 
 class VehicleServiceSchemaIn(BaseModel):
+    """Vehicle service schema for creating vehicle service"""
     date_of_service: date
     vehicle_id: str
     employee_id: str
@@ -24,6 +29,7 @@ class VehicleServiceSchemaIn(BaseModel):
 
 
 class VehicleServiceCountSchema(BaseModel):
+    """Vehicle service schema for counting number of services"""
     service_type_name: str
     number_of_services: int
 
@@ -32,6 +38,7 @@ class VehicleServiceCountSchema(BaseModel):
 
 
 class VehicleServiceMonthIncomeSchema(BaseModel):
+    """Vehicle service schema for monthly income"""
     income_for_month: float
 
     class Config:
@@ -39,6 +46,7 @@ class VehicleServiceMonthIncomeSchema(BaseModel):
 
 
 class VehicleServiceYearIncomeSchema(BaseModel):
+    """Vehicle service schema for yearly income"""
     income_for_year: float
 
     class Config:
@@ -46,6 +54,7 @@ class VehicleServiceYearIncomeSchema(BaseModel):
 
 
 class VehicleServiceMostPopularSchema(BaseModel):
+    """Vehicle service schema for most popular vehicle service"""
     service_type_name: str
     number_of_services: int
 

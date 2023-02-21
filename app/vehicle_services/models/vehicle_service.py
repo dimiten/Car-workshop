@@ -1,3 +1,6 @@
+"""Vehicle service model"""
+
+
 from app.db.database import Base
 from sqlalchemy import Column, String, ForeignKey, Date
 from uuid import uuid4
@@ -5,6 +8,7 @@ from datetime import date
 
 
 class VehicleService(Base):
+    """Vehicle service class"""
     __tablename__ = "vehicle_services"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
     date_of_service = Column(Date)

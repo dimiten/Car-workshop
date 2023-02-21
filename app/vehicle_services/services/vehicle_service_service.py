@@ -1,3 +1,6 @@
+"""Vehicle services services"""
+
+
 from datetime import date
 
 from app.vehicle_services.repositories import VehicleServiceRepository
@@ -9,11 +12,12 @@ from app.vehicle_services.exceptions import *
 
 
 class VehicleServicesServices:
+    """Vehicle service services"""
 
     @staticmethod
     def create_vehicle_service(date_of_service: date, vehicle_id: str, employee_id: str, service_type_name: str):
+        """Create vehicle service"""
         try:
-            # datetime.datetime.strptime(str(date_of_service), r"%Y-%m-%d")
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
                 vehicle_repository = VehicleRepository(db)
@@ -36,6 +40,7 @@ class VehicleServicesServices:
 
     @staticmethod
     def get_vehicle_service_by_id(vehicle_service_id: str):
+        """Get vehicle service by id"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
@@ -45,6 +50,7 @@ class VehicleServicesServices:
 
     @staticmethod
     def get_all_vehicle_services():
+        """Get all vehicle services"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
@@ -54,6 +60,7 @@ class VehicleServicesServices:
 
     @staticmethod
     def delete_vehicle_service_by_id(vehicle_service_id: str):
+        """Delete vehicle service by id"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
@@ -64,6 +71,7 @@ class VehicleServicesServices:
     @staticmethod
     def update_vehicle_service(vehicle_service_id: str, date_of_service: str = None, vehicle_id: str = None,
                                employee_id: str = None, service_type_name: str = None):
+        """Update vehicle service"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
@@ -74,6 +82,7 @@ class VehicleServicesServices:
 
     @staticmethod
     def get_number_of_services_for_month(number_of_month: str, year: str):
+        """Get the number of vehicle services for a specific month"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
@@ -83,6 +92,7 @@ class VehicleServicesServices:
 
     @staticmethod
     def get_number_of_services_for_year(year: str):
+        """Get the number of vehicle services for a specific year"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
@@ -92,6 +102,7 @@ class VehicleServicesServices:
 
     @staticmethod
     def get_income_for_month(number_of_month: str, year: str):
+        """Get the income for month"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
@@ -101,6 +112,7 @@ class VehicleServicesServices:
 
     @staticmethod
     def get_income_for_year(year: str):
+        """Get the income for year"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
@@ -110,6 +122,7 @@ class VehicleServicesServices:
 
     @staticmethod
     def get_most_popular_service_for_month(number_of_month: str, year: str):
+        """Get the most popular vehicle service for a specific month"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
@@ -119,6 +132,7 @@ class VehicleServicesServices:
 
     @staticmethod
     def get_most_popular_service_for_year(year: str):
+        """Get the most popular vehicle service for a specific year"""
         try:
             with SessionLocal() as db:
                 vehicle_service_repository = VehicleServiceRepository(db)
