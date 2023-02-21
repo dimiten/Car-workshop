@@ -1,9 +1,13 @@
+"""Employee model"""
+
+
 from app.db.database import Base
 from sqlalchemy import Column, String, Boolean
 from uuid import uuid4
 
 
 class Employee(Base):
+    """Employee class"""
     __tablename__ = "employees"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
     name = Column(String(50))

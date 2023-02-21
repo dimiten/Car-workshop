@@ -1,7 +1,11 @@
+"""Employee schemas"""
+
+
 from pydantic import BaseModel, UUID4, EmailStr
 
 
 class EmployeeSchema(BaseModel):
+    """Employee schema"""
     id: UUID4
     name: str
     surname: str
@@ -15,6 +19,7 @@ class EmployeeSchema(BaseModel):
 
 
 class EmployeeSchemaWithPassword(BaseModel):
+    """Employee with password schema"""
     id: UUID4
     name: str
     surname: str
@@ -29,6 +34,7 @@ class EmployeeSchemaWithPassword(BaseModel):
 
 
 class EmployeeSchemaIn(BaseModel):
+    """Employee schema in"""
     name: str
     surname: str
     email: EmailStr
@@ -40,6 +46,7 @@ class EmployeeSchemaIn(BaseModel):
 
 
 class EmployeeSchemaWithPasswordIn(BaseModel):
+    """Employee with password schema in"""
     name: str
     surname: str
     email: EmailStr
@@ -52,6 +59,7 @@ class EmployeeSchemaWithPasswordIn(BaseModel):
 
 
 class LoginEmployeeSchema(BaseModel):
+    """Employee schema for login"""
     email: str
     password: str
 

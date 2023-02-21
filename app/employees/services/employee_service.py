@@ -1,13 +1,17 @@
+"""Employee service"""
+
+
 from app.employees.repositories import EmployeeRepository
 from app.db.database import SessionLocal
 from app.employees.exceptions import *
-import hashlib
 
 
 class EmployeeServices:
+    """EmployeeServices class"""
 
     @staticmethod
     def create_employee(name, surname, email, phone_number, position):
+        """Creates an employee"""
         try:
             with SessionLocal() as db:
                 employee_repository = EmployeeRepository(db)
@@ -24,6 +28,7 @@ class EmployeeServices:
 
     @staticmethod
     def create_employee_with_password(name, surname, email, phone_number, position, password):
+        """Creates an employee with password"""
         try:
             with SessionLocal() as db:
                 employee_repository = EmployeeRepository(db)
@@ -41,6 +46,7 @@ class EmployeeServices:
 
     @staticmethod
     def get_employee_by_id(employee_id: str):
+        """Returns an employee by id"""
         try:
             with SessionLocal() as db:
                 employee_repository = EmployeeRepository(db)
@@ -50,6 +56,7 @@ class EmployeeServices:
 
     @staticmethod
     def get_all_employees():
+        """Returns all employees"""
         try:
             with SessionLocal() as db:
                 employee_repository = EmployeeRepository(db)
@@ -59,6 +66,7 @@ class EmployeeServices:
 
     @staticmethod
     def delete_employee_by_id(employee_id: str):
+        """Deletes an employee by id"""
         try:
             with SessionLocal() as db:
                 employee_repository = EmployeeRepository(db)
@@ -68,6 +76,7 @@ class EmployeeServices:
 
     @staticmethod
     def update_employee_is_admin(employee_id: str, is_admin: bool):
+        """Updates an employee attribute: is_admin"""
         try:
             with SessionLocal() as db:
                 employee_repository = EmployeeRepository(db)
@@ -77,6 +86,7 @@ class EmployeeServices:
 
     @staticmethod
     def login_employee(email: str, password: str):
+        """Login employee"""
         try:
             with SessionLocal() as db:
                 employee_repository = EmployeeRepository(db)

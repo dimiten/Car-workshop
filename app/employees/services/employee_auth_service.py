@@ -1,3 +1,6 @@
+"""Employee auth service"""
+
+
 import time
 from typing import Dict
 
@@ -10,6 +13,7 @@ JWT_ALGORITHM = settings.ALGORITHM
 
 
 def signJWT(employee_id: str, role: str) -> Dict[str, str]:
+    """Sign JWT"""
     payload = {
         "employee_id": employee_id,
         "role": role,
@@ -21,6 +25,7 @@ def signJWT(employee_id: str, role: str) -> Dict[str, str]:
 
 
 def decodeJWT(token: str) -> dict:
+    """Decode JWT"""
     try:
         decoded_token = jwt.decode(token, EMPLOYEE_SECRET, algorithms=[JWT_ALGORITHM])
         return decoded_token if decoded_token["expires"] >= time.time() else None

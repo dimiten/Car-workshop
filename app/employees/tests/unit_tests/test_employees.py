@@ -1,3 +1,6 @@
+"""Unit tests for employee"""
+
+
 import pytest
 from sqlalchemy.exc import IntegrityError
 
@@ -6,8 +9,10 @@ from app.employees.repositories import EmployeeRepository
 
 
 class TestEmployeeRepo(TestClass):
+    """TestEmployeeRepo class"""
 
     def create_employees_for_methods(self):
+        """Creates employees for testing"""
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
             employee_repository.create_employee("Ime1", "Prezime1", "mejl1@gmail.com",
@@ -20,6 +25,7 @@ class TestEmployeeRepo(TestClass):
                                                 "+3816431444", "mechanic")
 
     def test_create_employee(self):
+        """Test for creating an employee"""
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
             employee = employee_repository.create_employee("Ivan", "Petrovic", "ivanpetrovic@gmail.com",
@@ -32,6 +38,7 @@ class TestEmployeeRepo(TestClass):
             assert employee.is_admin is False
 
     def test_create_employee_fail(self):
+        """Test for creating an employee fail"""
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
             employee = employee_repository.create_employee("Ivan", "Petrovic", "ivanpetrovic@gmail.com",
@@ -47,6 +54,7 @@ class TestEmployeeRepo(TestClass):
                                                                 "+3816583812", "mechanic")
 
     def test_get_employee_by_id(self):
+        """Test get employee by id"""
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
             employee1 = employee_repository.create_employee("Ivan", "Petrovic", "ivanpetrovic@gmail.com",
@@ -55,6 +63,7 @@ class TestEmployeeRepo(TestClass):
             assert employee1 == employee2
 
     def test_get_employee_by_id_fail(self):
+        """Test get employee by id"""
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
             employee1 = employee_repository.create_employee("Ivan", "Petrovic", "ivanpetrovic@gmail.com",
@@ -63,6 +72,7 @@ class TestEmployeeRepo(TestClass):
             assert not employee1 != employee2
 
     def test_get_all_employees(self):
+        """Test get all employees"""
         self.create_employees_for_methods()
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
@@ -70,6 +80,7 @@ class TestEmployeeRepo(TestClass):
             assert len(employees) == 4
 
     def test_get_all_employees_fail(self):
+        """Test get all employees fail"""
         self.create_employees_for_methods()
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
@@ -77,6 +88,7 @@ class TestEmployeeRepo(TestClass):
             assert not len(employees) != 4
 
     def test_delete_employee_by_id(self):
+        """Test delete an employee by id"""
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
             employee = employee_repository.create_employee("Ivan", "Petrovic", "ivanpetrovic@gmail.com",
@@ -84,6 +96,7 @@ class TestEmployeeRepo(TestClass):
             assert employee_repository.delete_employee_by_id(employee.id) is True
 
     def test_delete_employee_by_id_fail(self):
+        """Test delete an employee by id fail"""
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
             employee = employee_repository.create_employee("Ivan", "Petrovic", "ivanpetrovic@gmail.com",
@@ -91,6 +104,7 @@ class TestEmployeeRepo(TestClass):
             assert employee_repository.delete_employee_by_id(employee.id) is not False
 
     def test_update_employee_is_admin(self):
+        """Test for updating an employee"""
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
             employee = employee_repository.create_employee("Ivan", "Petrovic", "ivanpetrovic@gmail.com",
@@ -99,6 +113,7 @@ class TestEmployeeRepo(TestClass):
             assert employee.is_admin is True
 
     def test_update_employee_is_admin_fail(self):
+        """Test for updating an employee fail"""
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
             employee = employee_repository.create_employee("Ivan", "Petrovic", "ivanpetrovic@gmail.com",
@@ -107,6 +122,7 @@ class TestEmployeeRepo(TestClass):
             assert employee.is_admin is not False
 
     def test_get_employees_emails(self):
+        """Test get employees emails"""
         self.create_employees_for_methods()
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
@@ -115,6 +131,7 @@ class TestEmployeeRepo(TestClass):
                 employees_emails)
 
     def test_get_employees_emails_fail(self):
+        """Test get employees emails fail"""
         self.create_employees_for_methods()
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
@@ -123,6 +140,7 @@ class TestEmployeeRepo(TestClass):
                 employees_emails)
 
     def test_get_employees_phone_numbers(self):
+        """Test get employees phone numbers"""
         self.create_employees_for_methods()
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)
@@ -130,6 +148,7 @@ class TestEmployeeRepo(TestClass):
             assert {"+3816426422", "+3816495432", "+3811341432", "+3816431444"} == set(employees_phone_numbers)
 
     def test_get_employees_phone_numbers_fail(self):
+        """Test get employees phone numbers fail"""
         self.create_employees_for_methods()
         with TestingSessionLocal() as db:
             employee_repository = EmployeeRepository(db)

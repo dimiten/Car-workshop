@@ -1,3 +1,6 @@
+"""Employee auth controller"""
+
+
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
@@ -5,6 +8,7 @@ from app.employees.services import decodeJWT
 
 
 class JWTBearer(HTTPBearer):
+    """JWTBearer class"""
     def __init__(self, role: str, auto_error: bool = True):
         super(JWTBearer, self).__init__(auto_error=auto_error)
         self.role = role
@@ -26,6 +30,7 @@ class JWTBearer(HTTPBearer):
             raise HTTPException(status_code=403, detail="Invalid authorization code.")
 
     def verify_jwt(self, jwtoken: str) -> dict:
+        """Verify JWT"""
         is_token_valid: bool = False
         try:
             payload = decodeJWT(jwtoken)
