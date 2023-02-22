@@ -2,9 +2,10 @@
 
 
 from enum import Enum
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.vehicle_services.controller import VehicleServiceController
 from app.vehicle_services.schemas import *
+from app.employees.controller import JWTBearer
 
 
 vehicle_service_router = APIRouter(tags=["Vehicle services"], prefix="/api/vehicle-services")
@@ -54,7 +55,7 @@ def update_vehicle_service(vehicle_service_id: str, date_of_service: str = None,
                                                            service_type_name)
 
 
-@vehicle_service_router.delete("/")
+@vehicle_service_router.delete("/", dependencies=[Depends(JWTBearer("admin"))])
 def delete_vehicle_service_by_id(vehicle_service_id: str):
     """Delete vehicle service by id"""
     return VehicleServiceController.delete_vehicle_service_by_id(vehicle_service_id)
@@ -72,25 +73,29 @@ def get_number_of_services_for_year(year: str):
     return VehicleServiceController.get_number_of_services_for_year(year)
 
 
-@vehicle_service_router.get("/get-income-for-month", response_model=VehicleServiceMonthIncomeSchema)
+@vehicle_service_router.get("/get-income-for-month", response_model=VehicleServiceMonthIncomeSchema,
+                            dependencies=[Depends(JWTBearer("admin"))])
 def get_income_for_month(number_of_month: Month, year: str):
     """Get the income for a specific month"""
     return VehicleServiceController.get_income_for_month(number_of_month, year)
 
 
-@vehicle_service_router.get("/get-income-for-year", response_model=VehicleServiceYearIncomeSchema)
+@vehicle_service_router.get("/get-income-for-year", response_model=VehicleServiceYearIncomeSchema,
+                            dependencies=[Depends(JWTBearer("admin"))])
 def get_income_for_year(year: str):
     """Get the income for a specific year"""
     return VehicleServiceController.get_income_for_year(year)
 
 
-@vehicle_service_router.get("/get-most-popular-service-for-month", response_model=VehicleServiceMostPopularSchema)
+@vehicle_service_router.get("/get-most-popular-service-for-month", response_model=VehicleServiceMostPopularSchema,
+                            dependencies=[Depends(JWTBearer("admin"))])
 def get_most_popular_service_for_month(number_of_month: Month, year: str):
     """Get the most popular service for a specific month"""
     return VehicleServiceController.get_most_popular_service_for_month(number_of_month, year)
 
 
-@vehicle_service_router.get("/get-most-popular-service-for-year", response_model=VehicleServiceMostPopularSchema)
+@vehicle_service_router.get("/get-most-popular-service-for-year", response_model=VehicleServiceMostPopularSchema,
+                            dependencies=[Depends(JWTBearer("admin"))])
 def get_most_popular_service_for_year(year: str):
     """Get the most popular service for a specific year"""
     return VehicleServiceController.get_most_popular_service_for_year(year)

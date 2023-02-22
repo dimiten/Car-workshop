@@ -2,10 +2,11 @@
 
 
 from enum import Enum
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.customers.controller import CustomerController
 from app.customers.schemas import *
 from app.vehicles.schemas import VehicleSchema
+from app.employees.controller import JWTBearer
 
 
 customer_router = APIRouter(tags=["Customers"], prefix="/api/customers")
@@ -52,7 +53,7 @@ def update_customer_is_regular(customer_id: str, customer_is_regular: bool):
     return CustomerController.update_customer_is_regular(customer_id, customer_is_regular)
 
 
-@customer_router.delete("/")
+@customer_router.delete("/", dependencies=[Depends(JWTBearer("admin"))])
 def delete_customer_by_id(customer_id: str):
     """Deletes a customer by id"""
     return CustomerController.delete_customer_by_id(customer_id)

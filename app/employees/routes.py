@@ -1,21 +1,24 @@
 """Employee routes"""
 
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.employees.controller import EmployeeController
 from app.employees.schemas import *
+from app.employees.controller import JWTBearer
 
 employee_router = APIRouter(tags=["Employees"], prefix="/api/employees")
 
 
-@employee_router.post("/add-new-employee", response_model=EmployeeSchema)
+@employee_router.post("/add-new-employee", response_model=EmployeeSchema,
+                      dependencies=[Depends(JWTBearer("admin"))])
 def create_employee(employee: EmployeeSchemaIn):
     """Creates an employee"""
     return EmployeeController.create_employee(employee.name, employee.surname, employee.email, employee.phone_number,
                                               employee.position)
 
 
-@employee_router.post("/add-new-employee-with-password", response_model=EmployeeSchemaWithPassword)
+@employee_router.post("/add-new-employee-with-password", response_model=EmployeeSchemaWithPassword,
+                      dependencies=[Depends(JWTBearer("admin"))])
 def create_employee_with_password(employee: EmployeeSchemaWithPasswordIn):
     """Creates an employee with password"""
     return EmployeeController.create_employee_with_password(employee.name, employee.surname, employee.email,
@@ -29,25 +32,27 @@ def login_employee(employee: LoginEmployeeSchema):
     return EmployeeController.login_employee(employee.email, employee.password)
 
 
-@employee_router.get("/id", response_model=EmployeeSchemaWithPassword)
+@employee_router.get("/id", response_model=EmployeeSchemaWithPassword, dependencies=[Depends(JWTBearer("admin"))])
 def get_employee_by_id(employee_id: str):
     """Get employee by id"""
     return EmployeeController.get_employee_by_id(employee_id=employee_id)
 
 
-@employee_router.get("/get-all-employees", response_model=list[EmployeeSchemaWithPassword])
+@employee_router.get("/get-all-employees", response_model=list[EmployeeSchemaWithPassword],
+                     dependencies=[Depends(JWTBearer("admin"))])
 def get_all_employees():
     """Get all employees"""
     return EmployeeController.get_all_employees()
 
 
-@employee_router.put("/update/is_admin", response_model=EmployeeSchemaWithPassword)
+@employee_router.put("/update/is_admin", response_model=EmployeeSchemaWithPassword,
+                     dependencies=[Depends(JWTBearer("admin"))])
 def update_employee_is_admin(employee_id: str, is_admin: bool):
     """Update employee's attribute: is_admin"""
     return EmployeeController.update_employee_is_admin(employee_id=employee_id, is_admin=is_admin)
 
 
-@employee_router.delete("/")
+@employee_router.delete("/", dependencies=[Depends(JWTBearer("admin"))])
 def delete_employee_by_id(employee_id: str):
     """Delete an employee by id"""
     return EmployeeController.delete_employee_by_id(employee_id=employee_id)

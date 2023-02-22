@@ -1,9 +1,10 @@
 """Vehicle routes"""
 
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.vehicles.controller import VehicleController
 from app.vehicles.schemas import *
+from app.employees.controller import JWTBearer
 
 vehicle_router = APIRouter(tags=["Vehicles"], prefix="/api/vehicles")
 
@@ -35,7 +36,7 @@ def update_vehicle(vehicle_id: str, license_plate: str = None, manufacturer: str
                                             manufacture_year, customer_id)
 
 
-@vehicle_router.delete("/")
+@vehicle_router.delete("/", dependencies=[Depends(JWTBearer("admin"))])
 def delete_vehicle_by_id(vehicle_id: str):
     """Delete a vehicle by id"""
     return VehicleController.delete_vehicle_by_id(vehicle_id)
