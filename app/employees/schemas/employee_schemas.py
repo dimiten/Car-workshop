@@ -2,6 +2,7 @@
 
 
 from pydantic import BaseModel, UUID4, EmailStr
+from typing import Optional
 
 
 class EmployeeSchema(BaseModel):
@@ -24,7 +25,7 @@ class EmployeeSchemaWithPassword(BaseModel):
     name: str
     surname: str
     email: str
-    password: str
+    password: Optional[str]
     phone_number: str
     position: str
     is_admin: bool
@@ -60,7 +61,7 @@ class EmployeeSchemaWithPasswordIn(BaseModel):
 
 class LoginEmployeeSchema(BaseModel):
     """Employee schema for login"""
-    email: str
+    email: EmailStr
     password: str
 
     class Config:

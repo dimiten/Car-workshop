@@ -4,6 +4,7 @@
 from app.employees.repositories import EmployeeRepository
 from app.db.database import SessionLocal
 from app.employees.exceptions import *
+import hashlib
 
 
 class EmployeeServices:
@@ -39,8 +40,9 @@ class EmployeeServices:
                     raise EmployeePhoneNumberException(status_code=400,
                                                        detail=f"Employee with provided phone number"
                                                               f" - {phone_number} already exists.")
+                hashed_password = hashlib.sha256(bytes(password, "utf-8")).hexdigest()
                 return employee_repository.create_employee_with_password(name, surname, email, phone_number, position,
-                                                                         password)
+                                                                         hashed_password)
         except Exception as e:
             raise e
 
@@ -91,7 +93,9 @@ class EmployeeServices:
             with SessionLocal() as db:
                 employee_repository = EmployeeRepository(db)
                 employee = employee_repository.get_employee_by_email(email)
-                if password != employee.password:
+                print(hashlib.sha256(bytes(password, "utf-8")).hexdigest())
+                print(employee.password)
+                if hashlib.sha256(bytes(password, "utf-8")).hexdigest() != employee.password:
                     raise EmployeeInvalidPassword(status_code=401,
                                                   detail="Invalid password")
                 return employee

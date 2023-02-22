@@ -13,7 +13,7 @@ class Employee(Base):
     name = Column(String(50))
     surname = Column(String(50))
     email = Column(String(50), unique=True)
-    password = Column(String(50), default=None)
+    password = Column(String(100), default=None)
     phone_number = Column(String(15), unique=True)
     position = Column(String(50))
     is_admin = Column(Boolean, default=False)

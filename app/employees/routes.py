@@ -29,19 +29,19 @@ def login_employee(employee: LoginEmployeeSchema):
     return EmployeeController.login_employee(employee.email, employee.password)
 
 
-@employee_router.get("/id", response_model=EmployeeSchema)
+@employee_router.get("/id", response_model=EmployeeSchemaWithPassword)
 def get_employee_by_id(employee_id: str):
     """Get employee by id"""
     return EmployeeController.get_employee_by_id(employee_id=employee_id)
 
 
-@employee_router.get("/get-all-employees", response_model=list[EmployeeSchema])
+@employee_router.get("/get-all-employees", response_model=list[EmployeeSchemaWithPassword])
 def get_all_employees():
     """Get all employees"""
     return EmployeeController.get_all_employees()
 
 
-@employee_router.put("/update/is_admin", response_model=EmployeeSchema)
+@employee_router.put("/update/is_admin", response_model=EmployeeSchemaWithPassword)
 def update_employee_is_admin(employee_id: str, is_admin: bool):
     """Update employee's attribute: is_admin"""
     return EmployeeController.update_employee_is_admin(employee_id=employee_id, is_admin=is_admin)
