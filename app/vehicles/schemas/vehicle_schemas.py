@@ -1,7 +1,11 @@
+"""Vehicle schemas"""
+
+
 from pydantic import BaseModel, UUID4
 
 
 class VehicleSchema(BaseModel):
+    """Vehicle schema"""
     id: UUID4
     license_plate: str
     manufacturer: str
@@ -14,6 +18,7 @@ class VehicleSchema(BaseModel):
 
 
 class VehicleSchemaIn(BaseModel):
+    """Vehicle schema when creating a vehicle"""
     license_plate: str
     manufacturer: str
     model: str

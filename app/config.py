@@ -1,3 +1,6 @@
+"""app config"""
+
+
 from pydantic import BaseSettings
 
 

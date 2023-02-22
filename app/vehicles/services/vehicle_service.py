@@ -1,3 +1,6 @@
+"""Vehicle service"""
+
+
 from app.vehicles.repositories import VehicleRepository
 from app.db.database import SessionLocal
 from app.vehicles.exceptions import *
@@ -5,9 +8,11 @@ from app.customers.repositories import CustomerRepository
 
 
 class VehicleServices:
+    """VehicleServices class"""
 
     @staticmethod
     def create_vehicle(license_plate, manufacturer, model, manufacture_year, customer_id):
+        """Create a vehicle"""
         try:
             with SessionLocal() as db:
                 vehicle_repository = VehicleRepository(db)
@@ -26,6 +31,7 @@ class VehicleServices:
 
     @staticmethod
     def get_vehicle_by_id(vehicle_id: str):
+        """Get a vehicle by id"""
         try:
             with SessionLocal() as db:
                 vehicle_repository = VehicleRepository(db)
@@ -35,6 +41,7 @@ class VehicleServices:
 
     @staticmethod
     def get_all_vehicles():
+        """Get all vehicles"""
         try:
             with SessionLocal() as db:
                 vehicle_repository = VehicleRepository(db)
@@ -44,6 +51,7 @@ class VehicleServices:
 
     @staticmethod
     def delete_vehicle_by_id(vehicle_id: str):
+        """Delete a vehicle by id"""
         try:
             with SessionLocal() as db:
                 vehicle_repository = VehicleRepository(db)
@@ -54,6 +62,7 @@ class VehicleServices:
     @staticmethod
     def update_vehicle(vehicle_id: str, license_plate: str = None, manufacturer: str = None, model: str = None,
                        manufacture_year: str = None, customer_id: str = None):
+        """Update a vehicle"""
         try:
             with SessionLocal() as db:
                 vehicle_repository = VehicleRepository(db)
@@ -64,6 +73,7 @@ class VehicleServices:
 
     @staticmethod
     def get_all_vehicles_by_manufacture_year(manufacture_year: str):
+        """Get all vehicles by year of manufacturing"""
         try:
             with SessionLocal() as db:
                 vehicle_repository = VehicleRepository(db)
@@ -73,6 +83,7 @@ class VehicleServices:
 
     @staticmethod
     def get_all_vehicles_by_manufacturer(manufacturer: str):
+        """Get all vehicles by manufacturer"""
         try:
             with SessionLocal() as db:
                 vehicle_repository = VehicleRepository(db)
@@ -82,6 +93,7 @@ class VehicleServices:
 
     @staticmethod
     def get_all_vehicles_by_model(manufacturer: str, model: str):
+        """Get all vehicles by model"""
         try:
             with SessionLocal() as db:
                 vehicle_repository = VehicleRepository(db)

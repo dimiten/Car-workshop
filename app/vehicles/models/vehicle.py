@@ -1,9 +1,13 @@
+"""Vehicle model"""
+
+
 from app.db.database import Base
 from sqlalchemy import Column, String, ForeignKey
 from uuid import uuid4
 
 
 class Vehicle(Base):
+    """Vehicle class"""
     __tablename__ = "vehicles"
     id = Column(String(50), primary_key=True, default=uuid4, autoincrement=False)
     license_plate = Column(String(50), unique=True)
